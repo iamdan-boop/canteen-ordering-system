@@ -21,7 +21,9 @@ class AuthController extends Controller
                 'response_code' => 404
             ]);
         }
-        return $user->createToken('app_token')->plainTextToken;
+        return response([
+            'auth_token' => $user->createToken('app_token')->plainTextToken,
+        ], 201);
     }
 
 
@@ -34,6 +36,6 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
         $token = $user->createToken('app_token')->plainTextToken;
-        return response()->json(['auth_token' => $token]);
+        return response(['auth_token' => $token], 201);
     }
 }
